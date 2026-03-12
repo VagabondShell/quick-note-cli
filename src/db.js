@@ -11,10 +11,10 @@ export const saveDb = async (db) => {
     return db;
 }
 
-export const insetDb = async (note) => {
+export const inserDb = async (note) => {
     const db = await getDb();
     db.notes.push(note);
     await saveDb(db);
-    return data;
+    return note;
 }
 
