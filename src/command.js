@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { newNote, getAllNotes, findNote, removeNote, removeAllNotes } from './notes.js'
+import { startServer } from './server.js'
 
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
@@ -57,6 +58,9 @@ yargs(hideBin(process.argv)).command('new <note>', 'Creat new note', yargs => {
                 type: 'number'
             })
     }, async (argv) => {
+        const notes = await getAllNotes();
+        startServer(notes, argv.port);
+
 
     })
     .command('clean', 'remove all notes', () => { }, async () => await removeAllNotes())
