@@ -1,7 +1,12 @@
 {
-    "notes" : []
-}
-{
-  "note": "test note",
-  "id": 20
+  "notes": [
+    {
+      "content": "new on 2",
+      "id": 1773361283509,
+      "tags": [
+        "work",
+        " ser"
+      ]
+    }
+  ]
 }

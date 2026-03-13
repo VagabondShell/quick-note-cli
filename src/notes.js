@@ -1,4 +1,5 @@
 import { getDb, saveDb, inserDb } from './db.js'
+
 export const newNote = async (note, tags) => {
     const newNote = {
         content: note,
@@ -10,24 +11,24 @@ export const newNote = async (note, tags) => {
 }
 
 export const getAllNotes = async () => {
-    const { notes } = getDb();
+    const { notes } = await getDb();
     return notes;
 }
 
 export const findNote = async (filter) => {
-    const notes = getAllNotes();
+    const notes = await getAllNotes();
     return notes.filter(note => note.content.toLowerCase().includes(filter.toLowerCase()));
 }
 
 export const removeNote = async (id) => {
-    const notes = getAllNotes();
+    const notes = await getAllNotes();
     const match = notes.find(note => note.id === id);
     if (match) {
         const newNotes = notes.filter(note => note.id !== id);
         await saveDb(newNotes);
         return id;
     }
+    return null;
 }
-
-export const removeAllNotes = async () => saveDb({ note: [] })
+export const removeAllNotes = async () => await saveDb({ notes: [] })
 

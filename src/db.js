@@ -1,13 +1,14 @@
 import fs from 'node:fs/promises'
+import path from 'node:path';
 
-const dbPath = '../db.json';
+const dbPath = path.resolve('db.json');
 export const getDb = async () => {
     const db = await fs.readFile(dbPath, 'utf8');
-    return JSON.parce(db);
+    return JSON.parse(db);
 }
 
 export const saveDb = async (db) => {
-    await fd.writeFile(dbPath, JSON.stringify(db, null, 2), 'utf8');
+    await fs.writeFile(dbPath, JSON.stringify(db, null, 2), 'utf8');
     return db;
 }
 
@@ -17,4 +18,3 @@ export const inserDb = async (note) => {
     await saveDb(db);
     return note;
 }
-

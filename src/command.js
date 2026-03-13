@@ -1,13 +1,30 @@
 #!/usr/bin/env node
+import { newNote, getAllNotes, findNote, removeNote, removeAllNotes } from './notes.js'
+
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
+
+function listAllNotes(notes) {
+    notes.forEach(note => {
+        console.log('\n');
+        console.log('id: ', note.id);
+        console.log('tags: ', note.tags.join(', '));
+        console.log('note: ', note.content);
+    });
+}
+
 yargs(hideBin(process.argv)).command('new <note>', 'Creat new note', yargs => {
     return yargs.positional('note', { type: 'string', description: 'The content of the note you want to store' })
-}, (argv) => console.log(argv.note))
+}, async (argv) => {
+    const tags = argv.tags ? argv.tags.split(',') : []
+    const note = await newNote(argv.note, tags);
+    console.log('New note is created: ', note);
+})
     .option('tag', { type: 'string', alias: 't', description: 'tag to add to the note' })
 
     .command('all', 'get all notes', () => { }, async (argv) => {
-
+        const notes = getAllNotes();
+        listAllNotes(notes);
     })
     .command('find <filter>', 'get matching notes', yargs => {
         return yargs.positional('filter', {
@@ -35,9 +52,7 @@ yargs(hideBin(process.argv)).command('new <note>', 'Creat new note', yargs => {
     }, async (argv) => {
 
     })
-    .command('clean', 'remove all notes', () => { }, async (argv) => {
-
-    })
+    .command('clean', 'remove all notes', () => { }, async (argv) => await removeAllNotes())
     .demandCommand(1)
     .parse()
 
