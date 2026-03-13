@@ -25,7 +25,7 @@ export const removeNote = async (id) => {
     const match = notes.find(note => note.id === id);
     if (match) {
         const newNotes = notes.filter(note => note.id !== id);
-        await saveDb(newNotes);
+        await saveDb({ notes: newNotes });
         return id;
     }
     return null;

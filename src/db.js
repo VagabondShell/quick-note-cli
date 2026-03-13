@@ -8,6 +8,7 @@ export const getDb = async () => {
 }
 
 export const saveDb = async (db) => {
+    const dbObject = { notes: db };
     await fs.writeFile(dbPath, JSON.stringify(db, null, 2), 'utf8');
     return db;
 }
